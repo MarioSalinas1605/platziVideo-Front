@@ -1,7 +1,7 @@
 import React from 'react';
 
 function HelloWord() {
-    return(<H1>Hola mundo</H1>)
+    return(<h1>Hola mundo</h1>)
 }
 
 export default HelloWord
