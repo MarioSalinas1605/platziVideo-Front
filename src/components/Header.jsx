@@ -1,14 +1,16 @@
 import React from 'react';
 
 import '../assets/styles/components/Header.scss';
+import logo from '../assets/static/logo-platzi-video-BW2.png';
+import userIcon from '../assets/static/user-icon.png';
 
 function Header() {
   return (
     <header className="header">
-      <img className="header__img" src="./logo-platzi-video-BW2.png" alt="Logo of platzi" />
+      <img className="header__img" src={logo} alt="Logo of platzi" />
       <div className="header__menu">
         <div className="header__menu--profile">
-          <img src="./user-icon.png" alt="User" />
+          <img src={userIcon} alt="User" />
           <p>Perfil</p>
         </div>
         <ul>

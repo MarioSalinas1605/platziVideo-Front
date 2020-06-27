@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const loader = require('sass-loader');
 
 const config = {
   entry: './src/index.js',
@@ -37,6 +38,17 @@ const config = {
           },
           'css-loader',
           'sass-loader',
+        ],
+      },
+      {
+        test: /\.(png|gif|jpg)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: 'assets/[hash].[ext]',
+            },
+          },
         ],
       },
     ],
