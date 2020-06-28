@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
+import useInitialState from '../hooks/useInitialState';
 import Header from '../components/Header';
 import Search from '../components/Search';
 import Categories from '../components/Categories';
@@ -9,17 +10,8 @@ import Footer from '../components/Footer';
 import '../assets/styles/App.scss';
 
 function App() {
-  const [videos, setVideos] = useState({
-    mylist: [],
-    trends: [],
-    originals: [],
-  });
-
-  useEffect(() => {
-    fetch(' http://localhost:3000/initialState')
-      .then((response) => response.json())
-      .then((data) => setVideos(data));
-  }, []);
+  const API = 'http://localhost:3000/initialState';
+  const videos = useInitialState(API);
 
   return (
     <div className="app">
