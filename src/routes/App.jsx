@@ -1,13 +1,15 @@
 import React from 'react';
-import  { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route } from 'react-router-dom';
 import Home from '../containers/Home';
+import Login from '../containers/Login';
 
 function App() {
-    return(
-        <BrowserRouter>
-            <Route exact path="/" component={Home}></Route>
-        </BrowserRouter>
-    );
+  return (
+    <BrowserRouter>
+      <Route exact path="/" component={Home} />
+      <Route exact path="/login" component={Login} />
+    </BrowserRouter>
+  );
 }
 
 export default App;

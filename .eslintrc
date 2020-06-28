@@ -25,6 +25,6 @@
     ],
     "rules": {
       "react/jsx-filename-extension": 0,
-      "explicitSpread": "ignore"
+      // "explicitSpread": "ignore"
     }
   }

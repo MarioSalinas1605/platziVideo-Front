@@ -1,0 +1,105 @@
+.login {
+    background     : linear-gradient(#21c08B, #AB88FF);
+    display        : flex;
+    flex-direction : column;
+    align-items    : center;
+    justify-content: center;
+    padding        : 0 30px;
+    min-height     : calc(100vh - 200px);
+}
+
+.login__container {
+    min-height      : 700px;
+    width           : 300px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border          : 2px solid white;
+    border-radius   : 40px;
+    color           : white;
+    padding         : 60px 68px 40px;
+    display         : flex;
+    flex-direction  : column;
+    justify-content : space-around;
+}
+
+.login__container--form {
+    display       : flex;
+    flex-direction: column;
+
+    label {
+        font-size: 14px;
+    }
+}
+
+.login__container--remember-me {
+    color          : white;
+    display        : flex;
+    justify-content: space-between;
+    margin-top     : 10px;
+
+    a {
+        color          : white;
+        font-size      : 14px;
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+}
+
+.login__container--social-media>div {
+    display      : flex;
+    align-items  : center;
+    font-size    : 14px;
+    margin-bottom: 10px;
+}
+
+.login__container--social-media>div>img {
+    width       : 30px;
+    margin-right: 10px;
+}
+
+.login__container--register {
+    font-size: 14px;
+
+    a {
+        font-size      : 16px;
+        color          : white;
+        font-weight    : bold;
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+}
+
+.input {
+    background-color: transparent;
+    border          : 0;
+    border-bottom   : 2px solid white;
+    font-family     : 'Muli', sans-serif;
+    font-size       : 16px;
+    margin-bottom   : 20px;
+    padding         : 0 20px;
+    outline         : none;
+    height          : 50px;
+}
+
+::placeholder {
+    color: white;
+}
+
+.button {
+    background-color: rgba(255, 255, 255, 0.1);
+    border          : none;
+    border-radius   : 25px;
+    color           : white;
+    cursor          : pointer;
+    font-size       : 16px;
+    font-weight     : bold;
+    font-family     : 'Muli', sans-serif;
+    height          : 50px;
+    letter-spacing  : 1px;
+    margin          : 10px 0;
+}
