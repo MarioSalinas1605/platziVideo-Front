@@ -9,7 +9,7 @@ import CarouselItem from '../components/CarouselItem';
 import Footer from '../components/Footer';
 import '../assets/styles/App.scss';
 
-function App() {
+function Home() {
   const API = 'http://localhost:3000/initialState';
   const videos = useInitialState(API);
 
@@ -50,4 +50,4 @@ function App() {
   );
 }
 
-export default App;
+export default Home;
