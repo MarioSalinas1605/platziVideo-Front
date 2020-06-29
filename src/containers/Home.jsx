@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import useInitialState from '../hooks/useInitialState';
-import Header from '../components/Header';
 import Search from '../components/Search';
 import Categories from '../components/Categories';
 import Carousel from '../components/Carousel';
 import CarouselItem from '../components/CarouselItem';
-import Footer from '../components/Footer';
 import '../assets/styles/App.scss';
 
 function Home() {
@@ -14,8 +12,7 @@ function Home() {
   const videos = useInitialState(API);
 
   return (
-    <div className="app">
-      <Header />
+    <>
       <Search />
 
       {
@@ -44,9 +41,7 @@ function Home() {
           }
         </Carousel>
       </Categories>
-
-      <Footer />
-    </div>
+    </>
   );
 }
 
