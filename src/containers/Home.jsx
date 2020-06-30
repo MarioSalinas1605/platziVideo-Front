@@ -1,6 +1,6 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 
-import useInitialState from '../hooks/useInitialState';
 import Search from '../components/Search';
 import Categories from '../components/Categories';
 import Carousel from '../components/Carousel';
@@ -8,15 +8,14 @@ import CarouselItem from '../components/CarouselItem';
 import '../assets/styles/App.scss';
 
 function Home() {
-  const API = 'http://localhost:3000/initialState';
-  const videos = useInitialState(API);
+  const { myList, trends, originals } = useSelector((state) => state);
 
   return (
     <>
       <Search />
 
       {
-        videos.mylist.length > 0 && (
+        myList.length > 0 && (
         <Categories title="Mi lista">
           <Carousel>
             <CarouselItem />
@@ -29,7 +28,7 @@ function Home() {
       <Categories title="Tendencias">
         <Carousel>
           {
-            videos.trends.map((item) => <CarouselItem key={item.id} {...item} />)
+            trends.map((item) => <CarouselItem key={item.id} {...item} />)
           }
         </Carousel>
       </Categories>
@@ -37,7 +36,7 @@ function Home() {
       <Categories title="Originales">
         <Carousel>
           {
-            videos.originals.map((item) => <CarouselItem key={item.id} {...item} />)
+            originals.map((item) => <CarouselItem key={item.id} {...item} />)
           }
         </Carousel>
       </Categories>
