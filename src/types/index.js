@@ -1,0 +1,1 @@
+export const SET_FAVORITE = 'videos_set_favorite';

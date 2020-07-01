@@ -18,8 +18,9 @@ function Home() {
         myList.length > 0 && (
         <Categories title="Mi lista">
           <Carousel>
-            <CarouselItem />
-            <CarouselItem />
+            {
+              myList.map((item) => <CarouselItem key={item.id} {...item} />)
+            }
           </Carousel>
         </Categories>
         )
