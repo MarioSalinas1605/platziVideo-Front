@@ -8,7 +8,15 @@ import playIcon from '../assets/static/play-icon.png';
 import plusIcon from '../assets/static/plus-icon.png';
 import removeIcon from '../assets/static/remove-icon.png';
 
-function CarouselItem({ id, cover, title, year, contentRating, duration }) {
+function CarouselItem({
+  id,
+  cover,
+  title,
+  year,
+  contentRating,
+  duration,
+  isList,
+}) {
   const dispatch = useDispatch();
 
   function handleSetFavorite() {
@@ -38,18 +46,21 @@ function CarouselItem({ id, cover, title, year, contentRating, duration }) {
       <div className="carousel-item__details">
         <div>
           <img className="carousel-item__details--img" src={playIcon} alt="Play" />
-          <img
-            className="carousel-item__details--img"
-            src={plusIcon}
-            onClick={handleSetFavorite}
-            alt="Plus Icon"
-          />
-          <img
-            className="carousel-item__details--img"
-            src={removeIcon}
-            onClick={() => handleDeleteFavorite(id)}
-            alt="Remove Icon"
-          />
+          {
+            isList
+              ? <img
+                  className="carousel-item__details--img"
+                  src={removeIcon}
+                  onClick={() => handleDeleteFavorite(id)}
+                  alt="Remove Icon"
+              />
+              : <img
+                  className="carousel-item__details--img"
+                  src={plusIcon}
+                  onClick={handleSetFavorite}
+                  alt="Plus Icon"
+              />
+          }
         </div>
         <p className="carousel-item__details--title">{title}</p>
         <p className="carousel-item__details--subtitle">{`${year} ${contentRating} ${duration}`}</p>
@@ -64,7 +75,8 @@ CarouselItem.propTypes = {
     title: PropTypes.string,
     year: PropTypes.number,
     contentRating: PropTypes.string,
-    duration: PropTypes.number
+    duration: PropTypes.number,
+    isList: PropTypes.bool
 }
 
 export default CarouselItem;
