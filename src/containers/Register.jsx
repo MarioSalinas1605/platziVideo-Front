@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
+import { registerRequest } from '../actions/index';
 import '../assets/styles/components/Register.scss';
 
-function Register() {
+function Register({history}) {
+  const dispatch = useDispatch();
+
   const [form, setForm] = useState({
     email: '',
     name: '',
@@ -19,7 +23,8 @@ function Register() {
 
   function handleSubmit(event) {
     event.preventDefault();
-    console.log(form);
+    dispatch(registerRequest(form));
+    history.push('/');
   }
 
   return (
