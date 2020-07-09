@@ -1,4 +1,9 @@
-import { SET_FAVORITE, DELETE_FAVORITE, LOGIN_REQUEST } from '../types';
+import {
+  SET_FAVORITE,
+  DELETE_FAVORITE,
+  LOGIN_REQUEST,
+  LOGOUT_REQUEST,
+} from '../types';
 
 function reducer(state, action) {
   switch (action.type) {
@@ -13,6 +18,11 @@ function reducer(state, action) {
         myList: state.myList.filter((item) => item.id !== action.payload),
       };
     case LOGIN_REQUEST:
+      return {
+        ...state,
+        user: action.payload,
+      };
+    case LOGOUT_REQUEST:
       return {
         ...state,
         user: action.payload,
