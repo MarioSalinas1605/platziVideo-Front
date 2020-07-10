@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import { setFavorite, deleteFavorite } from '../actions';
 import '../assets/styles/components/CarouselItem.scss';
@@ -45,7 +46,13 @@ function CarouselItem({
       />
       <div className="carousel-item__details">
         <div>
-          <img className="carousel-item__details--img" src={playIcon} alt="Play" />
+          <Link to={`/player/${id}`}>
+            <img
+              className="carousel-item__details--img"
+              src={playIcon}
+              alt="Play"
+            />
+          </Link>
           {
             isList
               ? <img
