@@ -5,6 +5,7 @@ import Search from '../components/Search';
 import Categories from '../components/Categories';
 import Carousel from '../components/Carousel';
 import CarouselItem from '../components/CarouselItem';
+import Header from '../components/Header';
 import '../assets/styles/App.scss';
 
 function Home() {
@@ -12,6 +13,7 @@ function Home() {
 
   return (
     <>
+      <Header />
       <Search />
 
       {
