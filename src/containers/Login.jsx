@@ -68,7 +68,7 @@ function Login({ history }) {
             </div>
           </section>
           <p className="login__container--register">
-            No tienes ninguna cuenta
+            No tienes ninguna cuenta {' '}
             <Link to="/register">Regístrate</Link>
           </p>
         </section>
