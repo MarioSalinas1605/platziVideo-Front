@@ -25,9 +25,19 @@ if (ENV === 'development') {
 }
 
 app.get('*', (req, res) => {
-  res.json({
-    hello: 'world',
-  });
+  res.send(`
+  <!DOCTYPE html>
+  <html>
+  <head>
+    <link type="text/css" rel="stylesheet" href="assets/app.css">
+    <title>Platzi video</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="text/javascript" src="assets/app.js"></script>
+  </body>
+  </html>
+  `);
 });
 
 app.listen(PORT, (err) => {
