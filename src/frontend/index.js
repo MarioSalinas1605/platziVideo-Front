@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
@@ -7,13 +8,14 @@ import { createBrowserHistory } from 'history';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
 import App from './routes/App';
-import initialState from './initialState';
 import reducer from './reducers';
 
+const preloadedState = window.__PRELOADED_STATE__;
 const history = createBrowserHistory();
-const store = createStore(reducer, initialState, composeWithDevTools());
+const store = createStore(reducer, preloadedState, composeWithDevTools());
 
-ReactDOM.render(
+delete window.__PRELOADED_STATE__;
+ReactDOM.hydrate(
   <Provider store={store}>
     <Router history={history}>
       <App />

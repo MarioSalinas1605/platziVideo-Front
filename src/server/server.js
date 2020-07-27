@@ -34,7 +34,7 @@ if (ENV === 'development') {
   app.use(webpackHotMiddleware(compiler));
 }
 
-function setResponse(html) {
+function setResponse(html, preloadedState) {
   return (`
   <!DOCTYPE html>
   <html>
@@ -44,6 +44,9 @@ function setResponse(html) {
   </head>
   <body>
     <div id="app">${html}</div>
+    <script>
+      window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState).replace(/</g, '\\u003c')}
+    </script>
     <script type="text/javascript" src="assets/app.js"></script>
   </body>
   </html>
@@ -52,6 +55,7 @@ function setResponse(html) {
 
 function renderApp(req, res) {
   const store = createStore(reducer, initialState);
+  const preloadedState = store.getState();
   const html = renderToString(
     <Provider store={store}>
       <StaticRouter location={req.url} context={{}}>
@@ -59,7 +63,7 @@ function renderApp(req, res) {
       </StaticRouter>
     </Provider>,
   );
-  res.send(setResponse(html));
+  res.send(setResponse(html, preloadedState));
 }
 
 app.get('*', renderApp);
