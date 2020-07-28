@@ -13,6 +13,7 @@ import { renderRoutes } from 'react-router-config';
 import initialState from '../frontend/initialState';
 import reducer from '../frontend/reducers/index';
 import serverRoutes from '../frontend/routes/serverRoutes';
+import getManifest from './getManifest';
 
 dotenv.config();
 
@@ -34,18 +35,24 @@ if (ENV === 'development') {
   app.use(webpackDevMiddleware(compiler, serverConfig));
   app.use(webpackHotMiddleware(compiler));
 } else {
+  app.use((req, res, next) => {
+    if (!req.hashManifest) req.hashManifest = getManifest();
+    next();
+  });
   app.use(express.static(`${__dirname}/public`));
   app.use(helmet());
   app.use(helmet.permittedCrossDomainPolicies());
   app.disable('x-powered-by');
 }
 
-function setResponse(html, preloadedState) {
+function setResponse(html, preloadedState, manifest) {
+  const mainStyles = manifest ? manifest['main.css'] : 'assets/app.css';
+  const mainBuild = manifest ? manifest['main.js'] : 'assets/app.js';
   return (`
   <!DOCTYPE html>
   <html>
   <head>
-    <link type="text/css" rel="stylesheet" href="assets/app.css">
+    <link type="text/css" rel="stylesheet" href="${mainStyles}">
     <title>Platzi video</title>
   </head>
   <body>
@@ -53,7 +60,7 @@ function setResponse(html, preloadedState) {
     <script>
       window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState).replace(/</g, '\\u003c')}
     </script>
-    <script type="text/javascript" src="assets/app.js"></script>
+    <script type="text/javascript" src="${mainBuild}"></script>
   </body>
   </html>
   `);
@@ -69,7 +76,7 @@ function renderApp(req, res) {
       </StaticRouter>
     </Provider>,
   );
-  res.send(setResponse(html, preloadedState));
+  res.send(setResponse(html, preloadedState, req.hashManifest));
 }
 
 app.get('*', renderApp);
