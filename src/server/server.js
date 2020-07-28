@@ -48,6 +48,7 @@ if (ENV === 'development') {
 function setResponse(html, preloadedState, manifest) {
   const mainStyles = manifest ? manifest['main.css'] : 'assets/app.css';
   const mainBuild = manifest ? manifest['main.js'] : 'assets/app.js';
+  const vendorBuild = manifest ? manifest['vendors.js'] : 'assets/vendor.js';
   return (`
   <!DOCTYPE html>
   <html>
@@ -61,6 +62,7 @@ function setResponse(html, preloadedState, manifest) {
       window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState).replace(/</g, '\\u003c')}
     </script>
     <script type="text/javascript" src="${mainBuild}"></script>
+    <script type="text/javascript" src="${vendorBuild}"></script>
   </body>
   </html>
   `);
