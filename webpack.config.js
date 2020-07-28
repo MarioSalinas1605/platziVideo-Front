@@ -1,6 +1,8 @@
 const path = require('path');
 const webpack = require('webpack');
+const TerserPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CompressionWebpackPlugin = require('compression-webpack-plugin');
 require('dotenv').config();
 
 const isDev = (process.env.ENV === 'development');
@@ -21,6 +23,10 @@ const config = {
   resolve: {
     extensions: ['.js', '.jsx'],
   },
+  optimization: {
+    minimize: true,
+    minimizer: [new TerserPlugin()],
+  },
   module: {
     rules: [
       {
@@ -29,14 +35,6 @@ const config = {
         use: {
           loader: 'babel-loader',
         },
-      },
-      {
-        test: /\.html$/,
-        use: [
-          {
-            loader: 'html-loader',
-          },
-        ],
       },
       {
         test: /\.(s*)css$/,
@@ -67,7 +65,10 @@ const config = {
   plugins: [
     isDev
       ? new webpack.HotModuleReplacementPlugin()
-      : () => {},
+      : new CompressionWebpackPlugin({ 
+        test: /\.js$|\.css$/,
+        filename: '[path].gz',
+      }),
     new MiniCssExtractPlugin({
       filename: 'assets/app.css',
     }),
