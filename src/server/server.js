@@ -4,6 +4,9 @@ import dotenv from 'dotenv';
 import webpack from 'webpack';
 import helmet from 'helmet';
 import React from 'react';
+import passport from 'passport';
+import axios from 'axios';
+import cookieParser from 'cookie-parser';
 import { renderToString } from 'react-dom/server';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
@@ -20,6 +23,13 @@ dotenv.config();
 const { ENV, PORT } = process.env;
 
 const app = express();
+
+app.use(express.json());
+app.use(cookieParser());
+app.use(passport.initialize());
+app.use(passport.session());
+
+require('./utils/auth/strategies/basic');
 
 if (ENV === 'development') {
   console.log('Development config');
@@ -82,6 +92,25 @@ function renderApp(req, res) {
 }
 
 app.get('*', renderApp);
+
+app.post('/auth/sign-up', async (req, res, next) => {
+  const { body: user } = req;
+  try {
+    const userData = await axios({
+      url: `${process.env.API_URL}/api/auth/sign-up`,
+      method: 'post',
+      data: user,
+    });
+
+    res.status(201).json({
+      name: req.body.name,
+      email: req.body.email,
+      id: userData.data.id,
+    });
+  } catch (error) {
+    next(error);
+  }
+});
 
 app.listen(PORT, (err) => {
   if (err) console.log(err);

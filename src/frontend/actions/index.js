@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 import {
   SET_FAVORITE,
   DELETE_FAVORITE,
@@ -36,3 +38,9 @@ export const getVideoSource = (payload) => ({
   type: GET_VIDEO_SOURCE,
   payload,
 });
+
+export const registerUser = (payload, redirectUrl) => (dispatch) => {
+  axios.post('/auth/sign-up', payload)
+    .then(({ data }) => dispatch(registerRequest(data)))
+    .then(() => { window.location.href = redirectUrl; });
+};
