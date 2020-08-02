@@ -7,6 +7,7 @@ import React from 'react';
 import passport from 'passport';
 import axios from 'axios';
 import cookieParser from 'cookie-parser';
+import boom from '@hapi/boom';
 import { renderToString } from 'react-dom/server';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
@@ -30,6 +31,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 require('./utils/auth/strategies/basic');
+
+const THIRTY_DAYS_IN_SEC = 2592000000;
+const TWO_HOURS_IN_SEC = 7200000;
 
 if (ENV === 'development') {
   console.log('Development config');
@@ -92,6 +96,36 @@ function renderApp(req, res) {
 }
 
 app.get('*', renderApp);
+
+app.post('/auth/sign-in', async (req, res, next) => {
+  const { rememberMe } = req.body;
+
+  passport.authenticate('basic', (error, data) => {
+    try {
+      if (error || !data) {
+        next(boom.unauthorized());
+      }
+
+      req.login(data, { session: false }, async (errorLogin) => {
+        if (errorLogin) {
+          next(errorLogin);
+        }
+
+        const { token, ...user } = data;
+
+        res.cookie('token', token, {
+          httpOnly: !ENV === 'development',
+          secure: !ENV === 'development',
+          maxAge: rememberMe ? THIRTY_DAYS_IN_SEC : TWO_HOURS_IN_SEC,
+        });
+
+        res.status(200).json(user);
+      });
+    } catch (err) {
+      next(err);
+    }
+  })(req, res, next);
+});
 
 app.post('/auth/sign-up', async (req, res, next) => {
   const { body: user } = req;
