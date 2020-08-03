@@ -4,11 +4,11 @@ import Register from '../containers/Register';
 import NotFound from '../containers/NotFound';
 import Player from '../containers/Player';
 
-const routes = [
+const serverRoutes = (isLogged) => [
   {
     exact: true,
     path: '/',
-    component: Home,
+    component: isLogged ? Home : Login,
   },
   {
     exact: true,
@@ -23,7 +23,7 @@ const routes = [
   {
     exact: true,
     path: '/player/:id',
-    component: Player,
+    component: isLogged ? Player : Login,
   },
   {
     name: 'NotFound',
@@ -31,4 +31,4 @@ const routes = [
   },
 ];
 
-export default routes;
+export default serverRoutes;
