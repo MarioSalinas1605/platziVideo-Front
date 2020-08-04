@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import className from 'classnames';
+import PropTypes from 'prop-types';
 
 import gravatar from '../utils/gravatar';
 import { logoutRequest } from '../actions/index';
@@ -15,7 +16,12 @@ function Header({ isLogin, isRegister }) {
   const hasUser = Object.keys(user).length > 0;
 
   function handleLogut() {
+    document.cookie = 'email=';
+    document.cookie = 'name=';
+    document.cookie = 'id=';
+    document.cookie = 'token=';
     dispatch(logoutRequest({}));
+    window.location.href = '/login';
   }
 
   const headerClass = className('header', {
@@ -53,5 +59,15 @@ function Header({ isLogin, isRegister }) {
     </header>
   );
 }
+
+Header.propTypes = {
+  isLogin: PropTypes.string,
+  isRegister: PropTypes.string,
+};
+
+Header.defaultProps = {
+  isLogin: '',
+  isRegister: '',
+};
 
 export default Header;
