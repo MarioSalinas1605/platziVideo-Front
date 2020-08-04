@@ -25,7 +25,7 @@ function App({ isLogged }) {
 }
 
 App.propTypes = {
-  isLogged: PropTypes.bool,
+  isLogged: PropTypes.string,
 };
 
 App.defaultProps = {

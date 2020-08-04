@@ -82,19 +82,33 @@ function setResponse(html, preloadedState, manifest) {
   `);
 }
 
-function renderApp(req, res) {
+async function renderApp(req, res) {
   let initialState;
-  const { email, name, id } = req.cookies;
-  if (id) {
+  const {
+    email, name, id, token,
+  } = req.cookies;
+
+  try {
+    let movieList = await axios({
+      url: `${process.env.API_URL}/api/movies`,
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+      method: 'get',
+    });
+    movieList = movieList.data.data;
+    console.log(movieList);
     initialState = {
       user: {
-        email, name, id,
+        id,
+        email,
+        name,
       },
       myList: [],
-      trends: [],
-      originals: [],
+      trends: movieList.filter((movie) => movie.contentRating === 'PG' && movie._id),
+      originals: movieList.filter((movie) => movie.contentRating === 'G' && movie._id),
     };
-  } else {
+  } catch (error) {
     initialState = {
       user: {},
       myList: [],
@@ -102,6 +116,7 @@ function renderApp(req, res) {
       originals: [],
     };
   }
+
   const store = createStore(reducer, initialState);
   const preloadedState = store.getState();
   const isLogged = (initialState.user.id);
