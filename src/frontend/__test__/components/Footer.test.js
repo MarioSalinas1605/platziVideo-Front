@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 import React from 'react';
 import { mount } from 'enzyme';
+import { create } from 'react-test-renderer';
 // eslint-disable-next-line import/extensions
 import Footer from '../../components/Footer.jsx';
 
@@ -11,5 +12,10 @@ describe('<Footer />', () => {
   });
   test('Footer haves 3 anchors', () => {
     expect(footer.find('a')).toHaveLength(3);
+  });
+
+  test('Footer snapshot', () => {
+    const footerSnap = create(<Footer />);
+    expect(footerSnap.toJSON()).toMatchSnapshot();
   });
 });
