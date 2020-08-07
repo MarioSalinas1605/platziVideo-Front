@@ -61,13 +61,13 @@ function Header({ isLogin, isRegister }) {
 }
 
 Header.propTypes = {
-  isLogin: PropTypes.string,
-  isRegister: PropTypes.string,
+  isLogin: PropTypes.bool,
+  isRegister: PropTypes.bool,
 };
 
 Header.defaultProps = {
-  isLogin: '',
-  isRegister: '',
+  isLogin: false,
+  isRegister: false,
 };
 
 export default Header;
