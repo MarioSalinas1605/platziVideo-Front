@@ -8,7 +8,8 @@
     "start": "webpack-cli --config webpack.config.js && node src/server/",
     "build": "webpack-cli --config webpack.config.js",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
   },
   "repository": {
     "type": "git",
@@ -86,6 +87,7 @@
     "webpack-dev-server": "^3.11.0"
   },
   "jest": {
+    "verbose": true,
     "setupFilesAfterEnv": [
       "<rootDir>/src/frontend/__test__/setupTest.js"
     ],
