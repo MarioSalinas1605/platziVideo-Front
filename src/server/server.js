@@ -14,7 +14,8 @@ import { createStore } from 'redux';
 import { StaticRouter } from 'react-router-dom';
 import { renderRoutes } from 'react-router-config';
 
-// import initialState from '../frontend/initialState';
+// eslint-disable-next-line import/extensions
+import Layout from '../frontend/components/Layout.jsx';
 import reducer from '../frontend/reducers/index';
 import serverRoutes from '../frontend/routes/serverRoutes';
 import getManifest from './getManifest';
@@ -123,7 +124,7 @@ async function renderApp(req, res) {
   const html = renderToString(
     <Provider store={store}>
       <StaticRouter location={req.url} context={{}}>
-        {renderRoutes(serverRoutes(isLogged))}
+        <Layout>{renderRoutes(serverRoutes(isLogged))}</Layout>
       </StaticRouter>
     </Provider>,
   );
