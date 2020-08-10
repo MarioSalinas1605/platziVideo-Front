@@ -1,3 +1,5 @@
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import { useSelector } from 'react-redux';
 
@@ -21,7 +23,7 @@ function Home() {
         <Categories title="Mi lista">
           <Carousel>
             {
-              myList.map((item) => <CarouselItem key={item.id} {...item} isList />)
+              myList.map((item) => <CarouselItem key={item._id} {...item} isList />)
             }
           </Carousel>
         </Categories>
@@ -31,7 +33,7 @@ function Home() {
       <Categories title="Tendencias">
         <Carousel>
           {
-            trends.map((item) => <CarouselItem key={item.id} {...item} />)
+            trends.map((item) => <CarouselItem key={item._id} {...item} />)
           }
         </Carousel>
       </Categories>
@@ -39,7 +41,7 @@ function Home() {
       <Categories title="Originales">
         <Carousel>
           {
-            originals.map((item) => <CarouselItem key={item.id} {...item} />)
+            originals.map((item) => <CarouselItem key={item._id} {...item} />)
           }
         </Carousel>
       </Categories>
