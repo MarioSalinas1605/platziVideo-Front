@@ -39,28 +39,33 @@ export const getVideoSource = (payload) => ({
   payload,
 });
 
-export const loginUser = ({ email, password }, redirectUrl) => (dispatch) => {
-  axios({
-    url: '/auth/sign-in',
-    method: 'post',
-    auth: {
-      username: email,
-      password,
-    },
-  })
-    .then(({ data }) => {
-      document.cookie = `email=${data.user.email}`;
-      document.cookie = `name=${data.user.name}`;
-      document.cookie = `id=${data.user.id}`;
-      dispatch(loginRequest(data.user));
-    })
-    .then(() => {
-      window.location.href = redirectUrl;
+export const loginUser = ({ email, password }, redirectUrl) => async (dispatch) => {
+  try {
+    const { data } = await axios({
+      url: '/auth/sign-in',
+      method: 'post',
+      auth: {
+        username: email,
+        password,
+      },
     });
+
+    document.cookie = `email=${data.user.email}`;
+    document.cookie = `name=${data.user.name}`;
+    document.cookie = `id=${data.user.id}`;
+    dispatch(loginRequest(data.user));
+    window.location.href = redirectUrl;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
-export const registerUser = (payload, redirectUrl) => (dispatch) => {
-  axios.post('/auth/sign-up', payload)
-    .then(({ data }) => dispatch(registerRequest(data)))
-    .then(() => { window.location.href = redirectUrl; });
+export const registerUser = (payload, redirectUrl) => async (dispatch) => {
+  try {
+    const { data } = await axios.post('/auth/sign-up', payload);
+    dispatch(registerRequest(data));
+    window.location.href = redirectUrl;
+  } catch (error) {
+    console.log(error);
+  }
 };
