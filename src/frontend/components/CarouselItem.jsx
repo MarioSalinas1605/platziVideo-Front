@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { setFavorite, deleteFavorite } from '../actions';
+import { addFavorite, deleteFavorite } from '../actions';
 import '../assets/styles/components/CarouselItem.scss';
 import playIcon from '../assets/static/play-icon.png';
 import plusIcon from '../assets/static/plus-icon.png';
 import removeIcon from '../assets/static/remove-icon.png';
 
 function CarouselItem({
-  id,
+  _id,
   cover,
   title,
   year,
@@ -22,8 +22,8 @@ function CarouselItem({
 
   function handleSetFavorite() {
     dispatch(
-      setFavorite({
-        id,
+      addFavorite({
+        _id,
         cover,
         title,
         year,
@@ -46,7 +46,7 @@ function CarouselItem({
       />
       <div className="carousel-item__details">
         <div>
-          <Link to={`/player/${id}`}>
+          <Link to={`/player/${_id}`}>
             <img
               className="carousel-item__details--img"
               src={playIcon}
@@ -58,7 +58,7 @@ function CarouselItem({
               ? <img
                   className="carousel-item__details--img"
                   src={removeIcon}
-                  onClick={() => handleDeleteFavorite(id)}
+                  onClick={() => handleDeleteFavorite(_id)}
                   alt="Remove Icon"
               />
               : <img
@@ -77,7 +77,7 @@ function CarouselItem({
 }
 
 CarouselItem.propTypes = {
-    id: PropTypes.string,
+    _id: PropTypes.string,
     cover: PropTypes.string,
     title: PropTypes.string,
     year: PropTypes.number,
