@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable global-require */
 import express from 'express';
 import dotenv from 'dotenv';
@@ -97,15 +98,28 @@ async function renderApp(req, res) {
       },
       method: 'get',
     });
+    let { data: userMovieIds } = await axios({
+      url: `${process.env.API_URL}/api/user-movies?userId=${id}`,
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+      method: 'get',
+    });
+    userMovieIds = userMovieIds.data;
     movieList = movieList.data.data;
-    console.log(movieList);
+
+    const userList = movieList.filter((movie) => {
+      const itemStatus = userMovieIds.find((userMovie) => userMovie.movieId === movie._id);
+      return itemStatus;
+    });
+
     initialState = {
       user: {
         id,
         email,
         name,
       },
-      myList: [],
+      myList: userList || [],
       trends: movieList.filter((movie) => movie.contentRating === 'PG' && movie._id),
       originals: movieList.filter((movie) => movie.contentRating === 'G' && movie._id),
     };
@@ -177,6 +191,29 @@ app.post('/auth/sign-up', async (req, res, next) => {
       email: req.body.email,
       id: userData.data.id,
     });
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.post('/user-movies', async (req, res, next) => {
+  const { body: movie } = req;
+  const { id: userId, token } = req.cookies;
+  const userMovie = {
+    userId,
+    movieId: movie._id,
+  };
+
+  try {
+    const { data: movieSaved } = await axios({
+      url: `${process.env.API_URL}/api/user-movies`,
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+      method: 'post',
+      data: userMovie,
+    });
+    res.status(201).json(movieSaved);
   } catch (error) {
     next(error);
   }

@@ -69,3 +69,12 @@ export const registerUser = (payload, redirectUrl) => async (dispatch) => {
     console.log(error);
   }
 };
+
+export const addFavorite = (payload) => async (dispatch) => {
+  try {
+    await axios.post('/user-movies', payload);
+    dispatch(setFavorite(payload));
+  } catch (error) {
+    console.log(error);
+  }
+};
