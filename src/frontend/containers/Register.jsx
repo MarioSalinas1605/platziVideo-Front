@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import '../assets/styles/components/Register.scss';
-import { registerUser } from '../actions/index';
+import { registerUserRequest } from '../actions/index';
 import Header from '../components/Header';
 
 function Register({ history }) {
@@ -24,7 +24,7 @@ function Register({ history }) {
 
   function handleSubmit(event) {
     event.preventDefault();
-    dispatch(registerUser(form, '/login'));
+    dispatch(registerUserRequest(form, '/login'));
   }
 
   return (

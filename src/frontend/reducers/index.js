@@ -1,16 +1,16 @@
 /* eslint-disable no-underscore-dangle */
 import {
-  SET_FAVORITE,
+  ADD_FAVORITE,
   DELETE_FAVORITE,
-  LOGIN_REQUEST,
-  LOGOUT_REQUEST,
-  REGISTER_REQUEST,
+  LOGIN,
+  LOGOUT,
+  REGISTER,
   GET_VIDEO_SOURCE,
 } from '../types';
 
 function reducer(state, action) {
   switch (action.type) {
-    case SET_FAVORITE:
+    case ADD_FAVORITE:
       return {
         ...state,
         myList: [...state.myList, action.payload],
@@ -20,17 +20,17 @@ function reducer(state, action) {
         ...state,
         myList: state.myList.filter((item) => item._id !== action.payload),
       };
-    case LOGIN_REQUEST:
+    case LOGIN:
       return {
         ...state,
         user: action.payload,
       };
-    case LOGOUT_REQUEST:
+    case LOGOUT:
       return {
         ...state,
         user: action.payload,
       };
-    case REGISTER_REQUEST:
+    case REGISTER:
       return {
         ...state,
         user: action.payload,

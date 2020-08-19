@@ -2,16 +2,16 @@
 import axios from 'axios';
 
 import {
-  SET_FAVORITE,
+  ADD_FAVORITE,
   DELETE_FAVORITE,
-  LOGIN_REQUEST,
-  LOGOUT_REQUEST,
-  REGISTER_REQUEST,
+  LOGIN,
+  LOGOUT,
+  REGISTER,
   GET_VIDEO_SOURCE,
 } from '../types';
 
-export const setFavorite = (payload) => ({
-  type: SET_FAVORITE,
+export const addFavorite = (payload) => ({
+  type: ADD_FAVORITE,
   payload,
 });
 
@@ -20,18 +20,18 @@ export const deleteFavorite = (payload) => ({
   payload,
 });
 
-export const loginRequest = (payload) => ({
-  type: LOGIN_REQUEST,
+export const login = (payload) => ({
+  type: LOGIN,
   payload,
 });
 
-export const logoutRequest = (payload) => ({
-  type: LOGOUT_REQUEST,
+export const logout = (payload) => ({
+  type: LOGOUT,
   payload,
 });
 
-export const registerRequest = (payload) => ({
-  type: REGISTER_REQUEST,
+export const register = (payload) => ({
+  type: REGISTER,
   payload,
 });
 
@@ -40,7 +40,7 @@ export const getVideoSource = (payload) => ({
   payload,
 });
 
-export const loginUser = ({ email, password }, redirectUrl) => async (dispatch) => {
+export const loginUserRequest = ({ email, password }, redirectUrl) => async (dispatch) => {
   try {
     const { data } = await axios({
       url: '/auth/sign-in',
@@ -54,34 +54,34 @@ export const loginUser = ({ email, password }, redirectUrl) => async (dispatch) 
     document.cookie = `email=${data.user.email}`;
     document.cookie = `name=${data.user.name}`;
     document.cookie = `id=${data.user.id}`;
-    dispatch(loginRequest(data.user));
+    dispatch(login(data.user));
     window.location.href = redirectUrl;
   } catch (error) {
     console.log(error);
   }
 };
 
-export const registerUser = (payload, redirectUrl) => async (dispatch) => {
+export const registerUserRequest = (payload, redirectUrl) => async (dispatch) => {
   try {
     const { data } = await axios.post('/auth/sign-up', payload);
-    dispatch(registerRequest(data));
+    dispatch(register(data));
     window.location.href = redirectUrl;
   } catch (error) {
     console.log(error);
   }
 };
 
-export const addFavorite = (payload) => async (dispatch) => {
+export const addFavoriteRequest = (payload) => async (dispatch) => {
   try {
     const { data: userMovie } = await axios.post('/user-movies', payload);
     const { data: _id } = userMovie;
-    dispatch(setFavorite({ ...payload, _id }));
+    dispatch(addFavorite({ ...payload, _id }));
   } catch (error) {
     console.log(error);
   }
 };
 
-export const deleteFavoriteServer = (payload) => async (dispatch) => {
+export const deleteFavoriteRequest = (payload) => async (dispatch) => {
   try {
     const { data } = await axios.delete(`/user-movies/${payload}`);
     dispatch(deleteFavorite(data));

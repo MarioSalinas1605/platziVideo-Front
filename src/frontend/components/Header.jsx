@@ -5,7 +5,7 @@ import className from 'classnames';
 import PropTypes from 'prop-types';
 
 import gravatar from '../utils/gravatar';
-import { logoutRequest } from '../actions/index';
+import { logout } from '../actions/index';
 import '../assets/styles/components/Header.scss';
 import logo from '../assets/static/logo-platzi-video-BW2.png';
 import userIcon from '../assets/static/user-icon.png';
@@ -20,7 +20,7 @@ function Header({ isLogin, isRegister }) {
     document.cookie = 'name=';
     document.cookie = 'id=';
     document.cookie = 'token=';
-    dispatch(logoutRequest({}));
+    dispatch(logout({}));
     window.location.href = '/login';
   }
 

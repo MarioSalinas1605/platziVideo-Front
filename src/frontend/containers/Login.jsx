@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import googleIcon from '../assets/static/google-icon.png';
 import twitterIcon from '../assets/static/twitter-icon.png';
-import { loginUser } from '../actions/index';
+import { loginUserRequest } from '../actions/index';
 
 import '../assets/styles/Login.scss';
 import Header from '../components/Header';
@@ -23,7 +23,7 @@ function Login({ history }) {
 
   function handleSubmit(event) {
     event.preventDefault();
-    dispatch(loginUser(form, '/'));
+    dispatch(loginUserRequest(form, '/'));
   }
 
   return (
