@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import axios from 'axios';
 
 import {
@@ -72,8 +73,18 @@ export const registerUser = (payload, redirectUrl) => async (dispatch) => {
 
 export const addFavorite = (payload) => async (dispatch) => {
   try {
-    await axios.post('/user-movies', payload);
-    dispatch(setFavorite(payload));
+    const { data: userMovie } = await axios.post('/user-movies', payload);
+    const { data: _id } = userMovie;
+    dispatch(setFavorite({ ...payload, _id }));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const deleteFavoriteServer = (payload) => async (dispatch) => {
+  try {
+    const { data } = await axios.delete(`/user-movies/${payload}`);
+    dispatch(deleteFavorite(data));
   } catch (error) {
     console.log(error);
   }

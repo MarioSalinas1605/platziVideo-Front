@@ -108,9 +108,14 @@ async function renderApp(req, res) {
     userMovieIds = userMovieIds.data;
     movieList = movieList.data.data;
 
-    const userList = movieList.filter((movie) => {
-      const itemStatus = userMovieIds.find((userMovie) => userMovie.movieId === movie._id);
-      return itemStatus;
+    const userList = [];
+    userMovieIds.forEach((userMovie) => {
+      let movieData = movieList.find((movie) => movie._id === userMovie.movieId);
+      if (movieData) {
+        movieData = { ...movieData };
+        movieData._id = userMovie._id;
+        userList.push(movieData);
+      }
     });
 
     initialState = {
@@ -214,6 +219,23 @@ app.post('/user-movies', async (req, res, next) => {
       data: userMovie,
     });
     res.status(201).json(movieSaved);
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.delete('/user-movies/:userMovieId', async (req, res, next) => {
+  const { userMovieId } = req.params;
+  const { token } = req.cookies;
+  try {
+    const { data: movieDeleted } = await axios({
+      url: `${process.env.API_URL}/api/user-movies/${userMovieId}`,
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+      method: 'delete',
+    });
+    res.status(200).json(movieDeleted.data);
   } catch (error) {
     next(error);
   }

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { addFavorite, deleteFavorite } from '../actions';
+import { addFavorite, deleteFavoriteServer } from '../actions';
 import '../assets/styles/components/CarouselItem.scss';
 import playIcon from '../assets/static/play-icon.png';
 import plusIcon from '../assets/static/plus-icon.png';
@@ -34,7 +34,7 @@ function CarouselItem({
   }
 
   function handleDeleteFavorite(itemId) {
-    dispatch(deleteFavorite(itemId));
+    dispatch(deleteFavoriteServer(itemId));
   }
 
   return (
