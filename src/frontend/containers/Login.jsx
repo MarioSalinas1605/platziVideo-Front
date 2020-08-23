@@ -8,7 +8,7 @@ import { loginUserRequest } from '../actions/index';
 import '../assets/styles/Login.scss';
 import Header from '../components/Header';
 
-function Login({ history }) {
+function Login() {
   const dispatch = useDispatch();
   const [form, setForm] = useState({
     email: '',
@@ -58,8 +58,10 @@ function Login({ history }) {
           </form>
           <section className="login__container--social-media">
             <div>
-              <img src={googleIcon} alt="Google" />
-              Inicia sesión con Google
+              <a href="/auth/google-auth">
+                <img src={googleIcon} alt="Google" />
+                Inicia sesión con Google
+              </a>
             </div>
             <div>
               <img src={twitterIcon} alt="Twitter" />
@@ -67,7 +69,8 @@ function Login({ history }) {
             </div>
           </section>
           <p className="login__container--register">
-            No tienes ninguna cuenta {' '}
+            No tienes ninguna cuenta
+            {' '}
             <Link to="/register">Regístrate</Link>
           </p>
         </section>

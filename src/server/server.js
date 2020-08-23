@@ -33,6 +33,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 require('./utils/auth/strategies/basic');
+require('./utils/auth/strategies/google');
 
 const THIRTY_DAYS_IN_SEC = 2592000000;
 const TWO_HOURS_IN_SEC = 7200000;
@@ -149,6 +150,40 @@ async function renderApp(req, res) {
   );
   res.send(setResponse(html, preloadedState, req.hashManifest));
 }
+
+app.get('/auth/google-auth', passport.authenticate('google-oauth', {
+  scope: ['email', 'profile', 'openid'],
+}));
+
+app.get('/auth/google-oauth/callback',
+  passport.authenticate('google-oauth', { session: false }),
+  (req, res, next) => {
+    if (!req.user) {
+      next(boom.unauthorized());
+    }
+
+    const { token, ...user } = req.user;
+
+    res.cookie('token', token, {
+      httpOnly: !ENV === 'development',
+      secure: !ENV === 'development',
+    });
+
+    res.cookie('id', user.user.id, {
+      httpOnly: !ENV === 'development',
+      secure: !ENV === 'development',
+    });
+    res.cookie('name', user.user.name, {
+      httpOnly: !ENV === 'development',
+      secure: !ENV === 'development',
+    });
+    res.cookie('email', user.user.email, {
+      httpOnly: !ENV === 'development',
+      secure: !ENV === 'development',
+    });
+
+    res.redirect('/');
+  });
 
 app.get('*', renderApp);
 
