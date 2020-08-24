@@ -58,6 +58,13 @@
     margin-right: 10px;
 }
 
+.login__container--social-media>div>a {
+    text-decoration: none;
+    color: white;
+    display: flex;
+    align-items: center;
+}
+
 .login__container--register {
     font-size: 14px;
 
@@ -103,3 +110,4 @@
     letter-spacing  : 1px;
     margin          : 10px 0;
 }
+

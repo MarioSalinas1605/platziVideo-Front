@@ -64,8 +64,10 @@ function Login() {
               </a>
             </div>
             <div>
-              <img src={twitterIcon} alt="Twitter" />
-              Inicia sesión con Twitter
+              <a href="/auth/twitter">
+                <img src={twitterIcon} alt="Twitter" />
+                Inicia sesión con Twitter
+              </a>
             </div>
           </section>
           <p className="login__container--register">
