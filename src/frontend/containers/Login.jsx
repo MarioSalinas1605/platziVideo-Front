@@ -64,9 +64,9 @@ function Login() {
               </a>
             </div>
             <div>
-              <a href="/auth/twitter">
+              <a href="/auth/facebook">
                 <img src={twitterIcon} alt="Twitter" />
-                Inicia sesión con Twitter
+                Inicia sesión con Facebook
               </a>
             </div>
           </section>

@@ -34,6 +34,7 @@ app.use(passport.session());
 
 require('./utils/auth/strategies/basic');
 require('./utils/auth/strategies/google');
+require('./utils/auth/strategies/facebook');
 
 const THIRTY_DAYS_IN_SEC = 2592000000;
 const TWO_HOURS_IN_SEC = 7200000;
@@ -184,6 +185,40 @@ app.get('/auth/google-oauth/callback',
 
     res.redirect('/');
   });
+
+app.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email'] }));
+
+app.get(
+  '/auth/facebook/callback',
+  passport.authenticate('facebook', { session: false }),
+  (req, res, next) => {
+    if (!req.user) {
+      next(boom.unauthorized());
+    }
+
+    const { token, ...user } = req.user;
+
+    res.cookie('token', token, {
+      httpOnly: !ENV === 'development',
+      secure: !ENV === 'development',
+    });
+
+    res.cookie('id', user.user.id, {
+      httpOnly: !ENV === 'development',
+      secure: !ENV === 'development',
+    });
+    res.cookie('name', user.user.name, {
+      httpOnly: !ENV === 'development',
+      secure: !ENV === 'development',
+    });
+    res.cookie('email', user.user.email, {
+      httpOnly: !ENV === 'development',
+      secure: !ENV === 'development',
+    });
+
+    res.redirect('/');
+  },
+);
 
 app.get('*', renderApp);
 
