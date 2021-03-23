@@ -1,16 +1,16 @@
 /* eslint-disable no-undef */
-import { setFavorite, loginRequest } from '../../actions';
+import { addFavorite, login } from '../../actions';
 import movieMock from '../../__mocks__/movieMock';
-import { LOGIN_REQUEST, SET_FAVORITE } from '../../types';
+import { LOGIN, ADD_FAVORITE } from '../../types';
 
 describe('Actions', () => {
   test('should ', () => {
     const payload = movieMock;
     const expectedAction = {
-      type: SET_FAVORITE,
+      type: ADD_FAVORITE,
       payload,
     };
-    expect(setFavorite(payload)).toEqual(expectedAction);
+    expect(addFavorite(payload)).toEqual(expectedAction);
   });
 
   test('Login', () => {
@@ -19,9 +19,9 @@ describe('Actions', () => {
       password: 'password',
     };
     const expectedAction = {
-      type: LOGIN_REQUEST,
+      type: LOGIN,
       payload,
     };
-    expect(loginRequest(payload)).toEqual(expectedAction);
+    expect(login(payload)).toEqual(expectedAction);
   });
 });
