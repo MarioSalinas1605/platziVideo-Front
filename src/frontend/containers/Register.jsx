@@ -39,6 +39,7 @@ function Register({ history }) {
               className="input"
               type="name"
               placeholder="Nombre"
+              value={form.name}
               onChange={handleInput}
             />
             <input
@@ -46,6 +47,7 @@ function Register({ history }) {
               className="input"
               type="text"
               placeholder="Correo"
+              value={form.email}
               onChange={handleInput}
             />
             <input
@@ -53,6 +55,7 @@ function Register({ history }) {
               className="input"
               type="password"
               placeholder="Contraseña"
+              value={form.password}
               onChange={handleInput}
             />
             <button type="submit" className="button">Registrame</button>

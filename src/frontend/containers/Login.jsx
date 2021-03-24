@@ -12,6 +12,7 @@ function Login() {
   const dispatch = useDispatch();
   const [form, setForm] = useState({
     email: '',
+    password: ''
   });
 
   function handleInput(event) {
@@ -38,6 +39,7 @@ function Login() {
               className="input"
               type="text"
               placeholder="Correo"
+              value={form.email}
               onChange={handleInput}
             />
             <input
@@ -45,6 +47,7 @@ function Login() {
               className="input"
               type="password"
               placeholder="Contraseña"
+              value={form.password}
               onChange={handleInput}
             />
             <button type="submit" className="button">Iniciar sesión</button>
