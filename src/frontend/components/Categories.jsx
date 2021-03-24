@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import '../assets/styles/components/Categories.scss';
 
@@ -9,6 +10,11 @@ function Categories({ children, title }) {
       {children}
     </div>
   );
+}
+
+Categories.propTypes = {
+  children: PropTypes.node,
+  title: PropTypes.string
 }
 
 export default Categories;
